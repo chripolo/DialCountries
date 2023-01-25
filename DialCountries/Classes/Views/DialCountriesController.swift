@@ -57,6 +57,7 @@ public class DialCountriesController: UITableViewController, UISearchResultsUpda
 		searchController.searchResultsUpdater = self
 		searchController.hidesNavigationBarDuringPresentation = false
 		searchController.obscuresBackgroundDuringPresentation = false
+		searchController.searchBar.backgroundColor = UIColor(named: "background")
 		self.navigationItem.titleView = self.searchController.searchBar
 		definesPresentationContext = true
 		
@@ -75,6 +76,13 @@ public class DialCountriesController: UITableViewController, UISearchResultsUpda
 		adapter.update(items: countryFilter)
 		tableView.reloadData()
 	}
+	
+	public func searchCountry(dialCodeCountry: String) -> Country? {
+        countryList = fetcher.fetch()
+        let selectedCountry = self.countryList.first(where: { $0.dialCode ==  "+\(dialCodeCountry)"})
+        
+        return selectedCountry
+    }
 }
 
 extension DialCountriesController: CountriesAdapterDelegate {
